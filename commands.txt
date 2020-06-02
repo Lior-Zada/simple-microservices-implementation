@@ -1,0 +1,5 @@
+npm create-react-app client
+mkdir posts
+cd posts
+npm init -y
+npm install
