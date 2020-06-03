@@ -24,7 +24,8 @@ app.post('/posts', async (req, res) => {
     };
     await axios.post('http://localhost:4006/events', {
         type: 'NEW_POST',
-        data: posts[id],
+        postId: id,
+        title,
     });
     
     res.status(201).send(posts[id]);

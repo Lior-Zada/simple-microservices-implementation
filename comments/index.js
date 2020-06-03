@@ -25,9 +25,9 @@ app.post('/posts/:id/comments', async (req, res) => {
 
     await axios.post('http://localhost:4006/events', {
         type: 'NEW_COMMENT',
-        id: commentId, 
+        commentId, 
         content,
-        postId: req.params.id
+        postId
     });
 
     res.status(201).send(commentsByPostId[postId]);

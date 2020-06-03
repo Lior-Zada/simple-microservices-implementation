@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default ({ comment }) => {
+export default ({ content }) => {
     return (
         <li>
-            {comment.content}
+            {content}
         </li>
     );
 };

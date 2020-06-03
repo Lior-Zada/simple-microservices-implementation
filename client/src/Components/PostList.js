@@ -12,7 +12,7 @@ export default () => {
 
     const getPosts = async () => {
         await axios
-            .get('http://localhost:4000/posts')
+            .get('http://localhost:4002/posts')
             .then(({ data }) => setPosts(data));
     };
 
@@ -32,7 +32,7 @@ export default () => {
 
                     <div className='card-footer'>
                         <h4>Comments</h4>
-                        <CommentList postId={post.id} />
+                        <CommentList comments={post.comments} />
                     </div>
                 </div>
             );
