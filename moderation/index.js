@@ -1,8 +1,8 @@
 const express = require('express');
 const axios = require('axios');
-const port = 4003;
 const bodyParser = require('body-parser');
 const serviceName = 'Moderation';
+const port = 4003;
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,7 +15,6 @@ app.post('/events', (req, res) => {
             moderateComment(req.body);
             commentModerated(req.body);
             break;
-
         default:
             break;
     }

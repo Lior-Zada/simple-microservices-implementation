@@ -1,9 +1,10 @@
 const express = require('express');
-const {randomBytes} = require('crypto');
+const { randomBytes } = require('crypto');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 const serviceName = 'Comments service';
+const port = 4001;
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,18 +19,18 @@ app.get('/posts/:id/comments', (req, res) => {
 app.post('/posts/:id/comments', async (req, res) => {
     const commentId = randomBytes(4).toString('hex');
     const postId = req.params.id;
-    const {content} = req.body;
+    const { content } = req.body;
     const comments = commentsByPostId[postId] || [];
     const status = 'pending';
-    comments.push({id: commentId, content, status});
+    comments.push({ id: commentId, content, status });
     commentsByPostId[postId] = comments;
 
     await axios.post('http://localhost:4006/events', {
         type: 'NEW_COMMENT',
-        commentId, 
+        commentId,
         content,
         status,
-        postId
+        postId,
     });
 
     res.status(201).send(commentsByPostId[postId]);
@@ -37,13 +38,11 @@ app.post('/posts/:id/comments', async (req, res) => {
 
 app.post('/events', (req, res) => {
     console.log(`${serviceName} received event ${req.body.type}`);
-    
-    
+
     switch (req.body.type) {
         case 'COMMENT_MODERATED':
             updateComment(req.body);
             break;
-    
         default:
             break;
     }
@@ -56,7 +55,8 @@ const updateComment = async (comment) => {
         ...comment,
         type: 'COMMENT_UPDATED',
     });
-}
+};
 
-app.listen(4001, () => console.log('Comments services listening on 4001.'))
-
+app.listen(port, () =>
+    console.log(`${serviceName} listening on port ${port}.`)
+);

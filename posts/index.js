@@ -4,6 +4,7 @@ const { randomBytes } = require('crypto');
 const cors = require('cors');
 const axios = require('axios');
 const serviceName = 'Posts service';
+const port = 4000;
 
 const app = express();
 app.use(bodyParser.json());
@@ -37,4 +38,4 @@ app.post('/events', (req, res) => {
     res.send({});
 });
 
-app.listen(4000, () => console.log('Posts service listening on port 4000.'));
+app.listen(port, () => console.log(`${serviceName} listening on port ${port}.`));
