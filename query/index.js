@@ -11,7 +11,7 @@ const posts = {};
 
 app.post('/events', (req, res) => {
     console.log(`${serviceName} received event ${req.body.type}`);
-    const { type, postId, commentId, title, content } = req.body;
+    const { type, postId, commentId, title, content, status } = req.body;
 
     switch (type) {
         case 'NEW_POST':
@@ -23,14 +23,22 @@ app.post('/events', (req, res) => {
                 posts[postId].comments.push({
                     id: commentId,
                     content,
+                    status,
                 });
             }
+            break;
+        case 'COMMENT_UPDATED':
+            const comment = posts[postId].comments.find(
+                (comment) => comment.id === commentId
+            );
+            comment.content = content;
+            comment.status = status;
+
             break;
         default:
             break;
     }
-    console.log(posts);
-
+    // console.log(posts);
     res.send({});
 });
 

@@ -33,15 +33,7 @@ app.post('/posts', async (req, res) => {
 
 app.post('/events', (req, res) => {
     console.log(`${serviceName} received event ${req.body.type}`);
-    switch (req.body.type) {
-        case 'NEW_COMMENT':
-            
-            break;
     
-        default:
-            break;
-    }
-
     res.send({});
 });
 

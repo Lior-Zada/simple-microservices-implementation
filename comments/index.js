@@ -20,13 +20,15 @@ app.post('/posts/:id/comments', async (req, res) => {
     const postId = req.params.id;
     const {content} = req.body;
     const comments = commentsByPostId[postId] || [];
-    comments.push({id: commentId, content});
+    const status = 'pending';
+    comments.push({id: commentId, content, status});
     commentsByPostId[postId] = comments;
 
     await axios.post('http://localhost:4006/events', {
         type: 'NEW_COMMENT',
         commentId, 
         content,
+        status,
         postId
     });
 
@@ -38,8 +40,8 @@ app.post('/events', (req, res) => {
     
     
     switch (req.body.type) {
-        case 'NEW_POST':
-            
+        case 'COMMENT_MODERATED':
+            updateComment(req.body);
             break;
     
         default:
@@ -48,6 +50,13 @@ app.post('/events', (req, res) => {
 
     res.send({});
 });
+
+const updateComment = async (comment) => {
+    await axios.post('http://localhost:4006/events', {
+        ...comment,
+        type: 'COMMENT_UPDATED',
+    });
+}
 
 app.listen(4001, () => console.log('Comments services listening on 4001.'))
 

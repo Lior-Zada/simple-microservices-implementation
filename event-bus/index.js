@@ -14,6 +14,7 @@ app.post('/events', (req, res) => {
         axios.post('http://localhost:4000/events', event); //update Posts service
         axios.post('http://localhost:4001/events', event); //update Comments service
         axios.post('http://localhost:4002/events', event); //update Query service    
+        axios.post('http://localhost:4003/events', event); //update Moderation service    
 
         res.send({status: 'Event registered', success: true});
     } catch (error) {
