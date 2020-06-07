@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1 #Number of pods running particular image
+  selector: #Tells the deployment to take a look at all the pods with the label app: posts. This works together with metadata below 
+    matchLabels:
+      app: posts #A label is a key:value pair. You can name it anything, not app is just an arbitrary name.
+  template: # Where we specify the exact information of a pod we want this deployment to create.
+    metadata: # the configuration that will be applied to the pod
+      labels: #Give the pod a label of app: posts
+        app: posts
+    spec:
+      containers: #A pod can contain multiple containers
+        - name: posts
+          image: lior305/posts # can leave empty tag or add :latest. the result is the same.
