@@ -14,4 +14,20 @@ spec:
     spec:
       containers: #A pod can contain multiple containers
         - name: posts
-          image: lior305/posts # can leave empty tag or add :latest. the result is the same.
+          image: lior305/blog-posts # can leave empty tag or add :latest. the result is the same.
+
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+      name: posts-clusterip-srv
+  spec:
+    selector:
+        app: posts
+    type: ClusterIP #This is the default if not specified
+    ports:
+      - name: posts
+        protocol: TCP
+        port: 4000
+        targetPort: 4000
+              

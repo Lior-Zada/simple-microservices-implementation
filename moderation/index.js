@@ -26,7 +26,7 @@ const moderateComment = (comment) =>
     (comment.status = ['badWord', 'anotherBadWord'].includes(comment.content) ? 'rejected' : 'approved');
 
 const commentModerated = async (comment) =>{
-    await axios.post('http://localhost:4006/events', {
+    await axios.post('http://event-bus-srv:4006/events', {
         ...comment,
         type: 'COMMENT_MODERATED',  // type must be AFTER ...comment beause it also has a type, and it loops
     });

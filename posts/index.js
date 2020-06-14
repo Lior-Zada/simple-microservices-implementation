@@ -23,7 +23,7 @@ app.post('/posts', async (req, res) => {
         id,
         title,
     };
-    await axios.post('http://localhost:4006/events', {
+    await axios.post('http://event-bus-srv:4006/events', {
         type: 'NEW_POST',
         postId: id,
         title,

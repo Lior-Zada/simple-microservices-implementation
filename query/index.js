@@ -49,6 +49,6 @@ app.get('/posts', (req, res) => res.send(posts));
 
 app.listen(port, async () => {
     console.log(`Query service listening on ${port}`);
-    const res = await axios.get('http://localhost:4006/events');
+    const res = await axios.get('http://event-bus-srv:4006/events');
     res.data.forEach((event) => handleEvent(event));
 });
