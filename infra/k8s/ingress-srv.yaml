@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv
+spec:
+  rules:
+    - host: posts.com
+      http:
+        paths:
+        - path: /posts
+          backend:
+            serviceName: posts-clusterip-srv
+            servicePort: 4000

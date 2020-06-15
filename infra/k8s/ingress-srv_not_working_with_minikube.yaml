@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations: #Ingress frequently uses annotations to configure some options depending on the Ingress controller
+    kubernetes.io/ingress.class: ngnix
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: posts.com
+      http:
+        paths:
+        - path: /posts
+          backend:
+            serviceName: posts-clusterip-srv
+            servicePort: 4000
