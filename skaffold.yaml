@@ -1,0 +1,59 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/* #Watch changes and reapply. Create objects when skaffold starts and delete when done
+build: # by default when skaffold makes changes to one of our images, it will try to push it to dockerhub, its not required 
+  local:
+    push: false
+    useDockerCLI: true
+  artifacts: #Tell skaffold to maintain the pod named client, and watch for changes and update the pod directly
+    - image: lior305/blog-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js' # if a change is outside this path, skaffold will rebuild the entire image
+            dest: .
+    - image: lior305/blog-comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: lior305/blog-event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: lior305/blog-moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: lior305/blog-posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: lior305/blog-query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
