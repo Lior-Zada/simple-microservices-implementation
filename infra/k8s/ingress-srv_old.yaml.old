@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv
+spec:
+  rules:
+    - host: posts.com
+      http:
+        paths:
+
+        - path: /posts/create #POST
+          backend:
+            serviceName: posts-clusterip-srv
+            servicePort: 4000
+
+        - path: /posts #GET
+          backend:
+            serviceName: query-srv
+            servicePort: 4002
+            
+        - path: /damn
+          backend:
+            serviceName: client-srv
+            servicePort: 3000
+       
+        # - path: /posts/?(.*)/comments #POST #NGNIX Doesn't support wildcard(:id), It supports regular-expressions that replaces it. 
+        #   backend:
+        #     serviceName: comments-srv
+        #     servicePort: 4001
+       
+
+        

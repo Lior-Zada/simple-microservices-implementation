@@ -12,7 +12,7 @@ export default () => {
 
     const getPosts = async () => {
         await axios
-            .get('http://localhost:4002/posts')
+            .get('http://posts.com/posts')
             .then(({ data }) => setPosts(data));
     };
 
